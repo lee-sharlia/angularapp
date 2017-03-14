@@ -6,7 +6,7 @@
         .module('formlyApp')
         .controller('MainController', MainController);
 
-function MainController(state) {
+function MainController(states) {
 
     var vm = this;
 

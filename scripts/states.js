@@ -8,7 +8,7 @@
 
         function state() {
             function getStates() {
-            }
+            };
 
             return {
                 getStates: getStates
