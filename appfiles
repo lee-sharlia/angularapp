@@ -62,7 +62,8 @@ export class AppModule {
 </html>
 
 //overlaymenu.component
-import {AppComponent} from '@angular/core';
+import {Component} from '@angular/core';
+import {AppComponent} from './app.component';
 
 @Component({
     selector: 'cardmenu',
