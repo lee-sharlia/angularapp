@@ -1,3 +1,12 @@
+//app.component.html
+<div class="cardmenu">
+    <h3> {{title}} </h3>
+    <br />
+    <ng-content></ng-content>
+</div>
+
+
+
 //app.component
 import {Component} from './@angular/core';
 import {AppModule} from './app.module';
@@ -17,7 +26,7 @@ export class AppComponent {
 }
 
 
-******Second iteration****
+******SECOND ITERATION*******************************************
 import {Component} from '@angular/core';
 import {AppModule} from './app.module';
 import {OvelaymenuComponent} from './overlaymenu.component';
@@ -46,7 +55,28 @@ export class AppComponent {
 }
 
 
+********THIRD ITERATION**************************************
+import {Component, OnInit} from '@angular/core';
 
+
+@Component({
+  moduleId: module.id,
+  selector: 'my-app',
+  templateUrl: 'app.component.html',
+
+  providers: [OverlaymenuService]
+})
+
+export class AppComponent implements OnInit {
+    menuitems;
+  
+  constructor(overlaymenuService: OverlaymenuService) {
+        this.menutiems = overlaymenuService.getMenuitems();
+  }
+
+    ngOnInit() {
+    }
+}
 
 
 
@@ -71,42 +101,61 @@ export class AppModule {
 }
 
 
+********SECOND ITERATION****************************
 
 
 
 //index.html
 <!DOCTYPE html>
 <html>
-  <head></head>
-  <body>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/typescript/2.1.4/typescript.min.js"></script>
-   <script src="https://code.angularjs.org/2.0.0-snapshot/angular2.js"></script>
-   <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/1.3.3/ui-bootstrap-tpls.js"></script>
-   <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/1.3.3/ui-bootstrap.js"></script>
-    <h1>Test Menu</h1>
-    <br/>
-    <div class="container">
-      <div class="row">
-        <div class="col-sm-4">
-          <my-app></my-app>
-        </div>
-        
-      </div>
-      
-    </div>
-  </body>
-  
+
+  <head>
+    <title>Overlay Menu</title>
+    <!--optional bootstrap for faster styling-->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.4/css/bootstrap.min.css" integrity="sha384-2hfp1SzUoho7/TsGGGDaFdsuuDL0LX2hnUp6VkX3CUQ2K4K+xjboZdsXyp4oUHZj" crossorigin="anonymous">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- 1. Load libraries -->
+     <!-- Polyfill(s) for older browsers -->
+    <script src="https://unpkg.com/core-js/client/shim.min.js"></script>
+
+    <script src="https://unpkg.com/zone.js@0.6.23?main=browser"></script>
+    <script src="https://unpkg.com/reflect-metadata@0.1.3"></script>
+    <script src="https://unpkg.com/systemjs@0.19.27/dist/system.src.js"></script>
+
+    <!-- 2. Configure SystemJS -->
+    <script src="systemjs.config.js"></script>
+    <script>
+      System.import('app').catch(function(err){ console.error(err); });
+    </script>
+  </head>
+
+<body>
+  <div class="container">
+        <h1>Administrative Requests</h1>
+        <my-app>Loading...</my-app>
+  </div>
+
+    
+</body>
+
 </html>
 
+
+
+
+
+
+
 //overlaymenu.component.html
-<!DOCTYPE html>
-<html>
-  <body>
-    <h1>Administrative Requests</h1>
-    <br>
-    <p cardmenu>Loading...</p>
-  </body>
-</html>
+<div class="cardmenu">
+    <h3> {{title}} </h3>
+    <br />
+    <ng-content></ng-content>
+</div>
+        
+
 
 
 
@@ -114,7 +163,6 @@ export class AppModule {
 
 //overlaymenu.component
 import {Component} from '@angular/core';
-import {AppComponent} from './app/component';
 import {OverlaymenuService} from './overlaymenu.service';
 
 @Component({
@@ -142,7 +190,7 @@ export class OverlaymenuComponent {
 }
 
 
-******Second iteration******
+******SECOND ITERATION***********************************
 import {Component} from '@angular/core';
 import {AppComponent} from './app/component';
 import {OverlaymenuService} from './overlaymenu.service';
@@ -153,7 +201,7 @@ import {OverlaymenuService} from './overlaymenu.service';
           <div class="cardmenu">
               <h3> {{title}} </h3>
               <br />
-                <ng-content select=".cardmenu"></ng-content>
+                <ng-content></ng-content>
                     
           </div>
           `,
@@ -171,6 +219,34 @@ export class OverlaymenuComponent {
         this.menutiems = overlaymenuService.getMenuitems();
   }
 }
+
+
+
+*********THIRD ITERATION****************************
+import {Component} from '@angular/core';
+import {OverlaymenuService} from './overlaymenu.service';
+
+@Component({
+    selector: 'cardmenu',
+    templateUrl: 'overlaymenu.component.html',
+    
+    providers: [OverlaymenuService]
+    
+})
+
+export class OverlaymenuComponent {
+  title = "Menu Items";
+  menuitems;
+  
+  constructor(overlaymenuService: OverlaymenuService) {
+        this.menutiems = overlaymenuService.getMenuitems();
+  }
+  
+  @Input () {
+    
+  }
+}
+
 
 
 
