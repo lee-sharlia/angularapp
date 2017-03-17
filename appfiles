@@ -1,0 +1,107 @@
+//app.component
+import {Component} from './@angular/core';
+import {AppModule} from './app.module';
+import {OvelaymenuComponent} from './overlaymenu.component';
+import {OverlaymenuDirective} from './overlaymenu.directive';
+
+@Component({
+  selector: 'my-app',
+  template: '<h1>My first App</h1>'
+  directives: [OverlaymenuComponent]
+  directives: [OverlaymenuDirective]
+  
+})
+
+export class AppComponent {
+  
+}
+
+//app.module
+import {OverlaymenuDirective} from './overlaymenu.directive';
+
+@NgModule({
+    declarations: [OverlaymenuDirective]
+})
+
+export class AppModule {
+  
+}
+
+//index.html
+<!DOCTYPE html>
+<html>
+  <head></head>
+  <body>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/typescript/2.1.4/typescript.min.js"></script>
+   <script src="https://code.angularjs.org/2.0.0-snapshot/angular2.js"></script>
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/1.3.3/ui-bootstrap-tpls.js"></script>
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/1.3.3/ui-bootstrap.js"></script>
+    <h1>Test Menu</h1>
+    <br/>
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-4">
+          <my-app></my-app>
+        </div>
+        
+      </div>
+      
+    </div>
+  </body>
+  
+</html>
+
+//overlaymenu.component.html
+<!DOCTYPE html>
+<html>
+  <body>
+    <h1>Administrative Requests</h1>
+    <br>
+    <p cardmenu>Loading...</p>
+  </body>
+</html>
+
+//overlaymenu.component
+import {AppComponent} from '@angular/core';
+
+@Component({
+    selector: 'cardmenu',
+    template: `
+                <h3> {{title}} </h3>
+                <br />
+                <ul>
+                  <li *ngFor="#menuitem of menuitems"> 
+                    {{menutitem}}</li>
+                </ul>
+                `
+    
+    providers: [OverlaymenuService]
+    
+})
+
+export class OverlaymenuComponent {
+  title = "Menu Items";
+  menuitem;
+  
+  constructor(overlaymenuService: OverlaymenuService) {
+        this.menutiems=overlaymenuService.getMenuitems ();
+  }
+}
+
+//overlaymenu.directive
+import {OverlaymenuComponent, ElementRef, Input};
+
+@Directive({
+    selector: 'cardmenu',
+})
+
+export class OverlaymenuDirective {
+    constructor(el:ElementRef)
+}
+
+//overlaymenu.service
+export class OverlaymenuService {
+  getMenuitems(): string [] {
+    return ["Initial", "Modify", "Evaluate"];
+  }
+}
