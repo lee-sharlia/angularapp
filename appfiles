@@ -16,16 +16,63 @@ export class AppComponent {
   
 }
 
-//app.module
+
+******Second iteration****
+import {Component} from '@angular/core';
+import {AppModule} from './app.module';
+import {OvelaymenuComponent} from './overlaymenu.component';
 import {OverlaymenuDirective} from './overlaymenu.directive';
 
+@Component({
+  selector: 'my-app',
+  template: `
+              <cardmenu>
+                <ul>
+                  <li *ngFor="#menuitem of menuitems"> 
+                    {{menutitem}}</li>
+                </ul>  
+              </cardmenu>
+              `,
+  directives: [OverlaymenuComponent, OverlaymenuDirective]
+  providers: [OverlaymenuService]
+})
+
+export class AppComponent {
+    menuitems;
+  
+  constructor(overlaymenuService: OverlaymenuService) {
+        this.menutiems = overlaymenuService.getMenuitems();
+  }
+}
+
+
+
+
+
+
+
+//app.module
+import {NgModule} from '@angular/core';
+import {BrowserModule} from '@angular/platform-browser';
+import {AppComponent} from './app.component';
+import {OverlaymenuDirective} from './overlaymenu.directive';
+import {OverlaymenuService} from './overlaymenu.service';
+
+
 @NgModule({
-    declarations: [OverlaymenuDirective]
+    imports: [BrowserModule],
+    declarations: [OverlaymenuDirective],
+    bootstrap: [AppComponent],
+    providers: [OverlaymenuService]
 })
 
 export class AppModule {
   
 }
+
+
+
+
 
 //index.html
 <!DOCTYPE html>
@@ -61,9 +108,14 @@ export class AppModule {
   </body>
 </html>
 
+
+
+
+
 //overlaymenu.component
 import {Component} from '@angular/core';
-import {AppComponent} from './app.component';
+import {AppComponent} from './app/component';
+import {OverlaymenuService} from './overlaymenu.service';
 
 @Component({
     selector: 'cardmenu',
@@ -82,12 +134,48 @@ import {AppComponent} from './app.component';
 
 export class OverlaymenuComponent {
   title = "Menu Items";
-  menuitem;
+  menuitems;
   
   constructor(overlaymenuService: OverlaymenuService) {
-        this.menutiems=overlaymenuService.getMenuitems ();
+        this.menutiems = overlaymenuService.getMenuitems();
   }
 }
+
+
+******Second iteration******
+import {Component} from '@angular/core';
+import {AppComponent} from './app/component';
+import {OverlaymenuService} from './overlaymenu.service';
+
+@Component({
+    selector: 'cardmenu',
+    template: `
+          <div class="cardmenu">
+              <h3> {{title}} </h3>
+              <br />
+                <ng-content select=".cardmenu"></ng-content>
+                    
+          </div>
+          `,
+    templateUrl: './overlaymenu.component.html'
+    
+    providers: [OverlaymenuService]
+    
+})
+
+export class OverlaymenuComponent {
+  title = "Menu Items";
+  menuitems;
+  
+  constructor(overlaymenuService: OverlaymenuService) {
+        this.menutiems = overlaymenuService.getMenuitems();
+  }
+}
+
+
+
+
+
 
 //overlaymenu.directive
 import {OverlaymenuComponent, ElementRef, Input};
@@ -99,6 +187,9 @@ import {OverlaymenuComponent, ElementRef, Input};
 export class OverlaymenuDirective {
     constructor(el:ElementRef)
 }
+
+
+
 
 //overlaymenu.service
 export class OverlaymenuService {
